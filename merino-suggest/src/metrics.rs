@@ -6,10 +6,10 @@ use std::time::Duration;
 /// Trait for recording timer values with additional precision.
 ///
 /// Time data is stored as a histogram.  Statistical distribution is calculated
-/// by the server. Times will be stored a number of milliseconds, with
+/// by the server. Times will be stored a number of microseconds, with
 /// fractional values used to represent nanoseconds.
 ///
-/// Only `Duration types are valid.
+/// Only `Duration` types are valid.
 ///
 /// See the [Statsd spec](https://github.com/b/statsd_spec) for more
 /// information.
@@ -43,7 +43,7 @@ impl<C: Histogrammed<f64>> TimedMicros for C {
         debug_assert!(key.ends_with("-us"));
 
         let nanos = value.as_nanos() as f64;
-        let millis = nanos / 1000_f64;
-        self.histogram_with_tags(key, millis)
+        let micros = nanos / 1000_f64;
+        self.histogram_with_tags(key, micros)
     }
 }
